@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Incrementer</title>
+    <link rel="stylesheet" href="..//CSS/style.css">
+</head>
+<body>
+
+<div class="section">
+    <div class="card">
+        <div class="header">AUTO INCREMENTER</div>
+
+        <div class="inputs">
+            <input id="exerciseValue" type="number" placeholder="ENTER WEIGHT/REP">
+
+            <select id="exerciseSelect">
+                <option value="pushups">Pushups</option>
+                <option value="pullups">Pullups</option>
+                <option value="bench">Bench Press</option>
+            </select>
+        </div>
+
+        <div class="inputs">
+            <input id="pumpValue" type="number" placeholder="PUMP (1-10)">
+            <input id="easeValue" type="number" placeholder="EASE (1-10)">
+            <button onclick="incrementExercise()" class="go">GO</button>
+        </div>
+
+        <p class="label">Reps/Weight to be executed</p>
+        <div class="output" id="incOutput"></div>
+
+        <a href="../index.html" class="nav-link">Back Menu</a>
+    </div>
+</div>
+
+<script>
+function incrementExercise() {
+
+    let ex = document.getElementById("exerciseSelect").value;
+    let val = parseFloat(document.getElementById("exerciseValue").value);
+    let pump = parseInt(document.getElementById("pumpValue").value);
+    let ease = parseInt(document.getElementById("easeValue").value);
+    let out = document.getElementById("incOutput");
+
+    out.classList.remove("out-up", "out-down", "out-same");
+
+    if (isNaN(pump) || isNaN(ease) || pump < 1 || ease < 1 || pump > 10 || ease > 10) {
+        out.innerHTML = "Invalid";
+        out.classList.add("out-down");
+        return;
+    }
+
+    let result = val;
+
+    if (ex === "pushups" || ex === "pullups") {
+        if (pump >= 9 && ease >= 9) result += 2;
+        else if (pump < ease) result += 1;
+        else if (pump >= ease) result += 1;
+        else if (ease <= 4) result = val;
+        else if (pump <= ease && ease <= 4) result -= 1;
+    }
+
+    if (ex === "bench") {
+        if (pump >= 9 && ease >= 9) result += 2.5;
+        else if (pump < ease) result += 1.5;
+        else if (ease <= 4) result = val;
+        else if (pump <= ease && ease <= 4) result -= 1;
+    }
+
+    if (result > val) out.classList.add("out-up");
+    else if (result < val) out.classList.add("out-down");
+    else out.classList.add("out-same");
+
+    out.innerHTML = result.toFixed(2);
+}
+</script>
+
+</body>
+</html>

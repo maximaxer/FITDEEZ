@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fitness Tools</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+<body>
+
+<div class="section">
+    <div class="card">
+        <div class="header">CALORIE CALCULATOR</div>
+
+        <div class="inputs">
+            <input id="foodWeight" type="number" placeholder="ENTER FOOD WEIGHT">
+
+            <select id="foodSelect">
+                <option value="egg">Large Egg</option>
+                <option value="chicken">Chicken Breast</option>
+                <option value="carbonara">Carbonara</option>
+                <option value="custom">Custom Food</option>
+            </select>
+
+            <button onclick="calcCalories()" class="go">GO</button>
+        </div>
+
+        <p class="label">TOTAL CALORIES</p>
+        <div class="output" id="calOutput"></div>
+
+        <!-- Link to incrementer page -->
+        <a href="../index.html" class="nav-link">Back to Menu</a>
+    </div>
+</div>
+
+<script>
+function calcCalories() {
+    let food = document.getElementById("foodSelect").value;
+    let w = parseFloat(document.getElementById("foodWeight").value);
+    let out = document.getElementById("calOutput");
+
+    out.classList.remove("food-high", "food-mid", "food-low");
+
+    let total = 0;
+
+    if (food === "carbonara") {
+        total = 950;
+        out.innerHTML = total + " cal";
+    } 
+    else if (food === "custom") {
+        let cals = prompt("Calories per gram:");
+        if (!cals) return;
+        total = w * parseFloat(cals);
+        out.innerHTML = total.toFixed(2);
+    }
+    else {
+        if (food === "egg") total = w * 2;
+        if (food === "chicken") total = w * 1.65;
+        out.innerHTML = total.toFixed(2);
+    }
+
+    if (total >= 600) out.classList.add("food-high");
+    else if (total >= 200) out.classList.add("food-mid");
+    else out.classList.add("food-low");
+}
+</script>
+
+</body>
+</html>
