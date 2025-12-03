@@ -6,31 +6,47 @@
     <link rel="stylesheet" href="..//CSS/style.css">
 </head>
 <body>
-
+<img src="../Images/bg.jpg" alt="A fitness-themed background image" class="bg-image">
 <div class="section">
     <div class="card">
-        <div class="header">AUTO INCREMENTER</div>
+        <div class="card">
+    <div class="header">AUTO INCREMENTER</div>
 
-        <div class="inputs">
-            <input id="exerciseValue" type="number" placeholder="ENTER WEIGHT/REP">
+    <div class="exercise-container">
 
-            <select id="exerciseSelect">
-                <option value="pushups">Pushups</option>
-                <option value="pullups">Pullups</option>
-                <option value="bench">Bench Press</option>
-            </select>
+        <div class="exercise-list">
+            <button class="exercise-btn" onclick="showInfo('pushups')">push ups</button>
+            <button class="exercise-btn" onclick="showInfo('pullups')">pull ups</button>
+            <button class="exercise-btn" onclick="showInfo('bench')">bench press</button>
         </div>
 
-        <div class="inputs">
-            <input id="pumpValue" type="number" placeholder="PUMP (1-10)">
-            <input id="easeValue" type="number" placeholder="EASE (1-10)">
-            <button onclick="incrementExercise()" class="go">GO</button>
+        <div class="exercise-info" id="exerciseInfo">
+            <div style="opacity:0.5;">Select an exercise to see its form guide…</div>
         </div>
 
-        <p class="label">Reps/Weight to be executed</p>
-        <div class="output" id="incOutput"></div>
+    </div>
 
-        <a href="../index.html" class="nav-link">Back Menu</a>
+    <div class="inputs">
+        <input id="exerciseValue" type="number" placeholder="ENTER WEIGHT/REP">
+        <select id="exerciseSelect">
+            <option value="pushups">Pushups</option>
+            <option value="pullups">Pullups</option>
+            <option value="bench">Bench Press</option>
+        </select>
+    </div>
+
+    <div class="inputs">
+        <input id="pumpValue" type="number" placeholder="PUMP (1-10)">
+        <input id="easeValue" type="number" placeholder="EASE (1-10)">
+        <button onclick="incrementExercise()" class="go">GO</button>
+    </div>
+
+    <p class="label">Reps/Weight to be executed</p>
+    <div class="output" id="incOutput"></div>
+
+    <a href="../index.html" class="nav-link">Back Menu</a>
+</div>
+
     </div>
 </div>
 
@@ -74,6 +90,35 @@ function incrementExercise() {
 
     out.innerHTML = result.toFixed(2);
 }
+const exerciseData = {
+    pushups: {
+        title: "Push Ups",
+        desc: "Keep yo body straight like a plank, hands shoulder-width, lower till your chest almost kisses the floor. Core tight, push strong.",
+        yt: "https://youtu.be/mm6_WcoCVTA?si=V3UO4oUYes7QecQr"
+    },
+    pullups: {
+        title: "Pull Ups",
+        desc: "Full dead hang, pull your chest toward the bar. No swinging — control the motion, elbows down and back.",
+        yt: "https://youtu.be/iWpoegdfgtc?si=hQf0Ht2rwGsz07FJ"
+    },
+    bench: {
+        title: "Bench Press",
+        desc: "Feet planted, slight back arch, shoulders locked in. Lower to mid-chest and press with control.",
+        yt: "https://youtu.be/YQ2s_Y7g5Qk?si=U-rHbrwF2lW1rJ2n"
+    }
+};
+
+function showInfo(ex) {
+    const data = exerciseData[ex];
+    const panel = document.getElementById("exerciseInfo");
+
+    panel.innerHTML = `
+        <div class="exercise-title">${data.title}</div>
+        <div class="exercise-desc">${data.desc}</div>
+        <a class="yt-link" href="${data.yt}" target="_blank">Watch Tutorial</a>
+    `;
+}
+
 </script>
 
 </body>
